@@ -1,9 +1,8 @@
 # Decouple4D: Static-Dynamic 3D Gaussian Decoupling from Monocular Video via Spatial-Temporal Consistency
 The code for "Decouple4D: Static-Dynamic 3D Gaussian Decoupling from Monocular Video via Spatial-Temporal Consistency".
 
-# Abstract 
-Instance-level static-dynamic segmentation is a crucial task for comprehensive 3D scene understanding.  Existing methods typically identify dynamic regions by detecting violations of view consistency; however, they often struggle with periodic, subtle, or partially moving objects that maintain view-consistent appearances across most frames. 
-In contrast, we explicitly model object motion and classify each Gaussian primitive according to its motion pattern and spatial position, using a novel spatial-temporal consistency constraint. The motion and positional information capture the dynamic behavior of individual Gaussians over time and the spatial relationships among Gaussians, respectively, while the spatial-temporal consistency constraint ensures reliable classification by enforcing that each Gaussian’s label remains consistent across multi-view projections and over time. For partially moving objects, we further associate dynamically significant Gaussians with instance segmentation masks, organizing dynamic Gaussians at the instance level rather than the pixel level. These masks, in turn, improve the training of both classifier and scene reconstruction, forming a reciprocal refinement loop. Experiments show that Decouple4D achieves state-of-the-art static-dynamic decoupling, and the explicit modeling of static and dynamic components enables applications such as distractor-free scene reconstruction and scene editing.
+# Note
+This is a preliminary draft. The code is currently not well organized and will be further updated.
 
 # Environment Setup
 We provide both pip and conda environment configurations for reproducibility.
