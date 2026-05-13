@@ -1,0 +1,278 @@
+absl-py==2.1.0
+accelerate==1.0.1
+addict==2.4.0
+aiofiles==23.2.1
+aiohappyeyeballs==2.4.4
+aiohttp==3.10.11
+aiosignal==1.3.1
+aliyun-python-sdk-core==2.16.0
+aliyun-python-sdk-kms==2.16.5
+annotated-types==0.7.0
+antlr4-python3-runtime==4.9.3
+anyio==4.5.2
+argon2-cffi==23.1.0
+argon2-cffi-bindings==21.2.0
+arrow==1.3.0
+asttokens==2.4.1
+async-lru==2.0.4
+async-timeout==5.0.1
+attrs==24.3.0
+babel==2.17.0
+backcall @ file:///home/ktietz/src/ci/backcall_1611930011877/work
+beautifulsoup4==4.13.3
+bleach==6.1.0
+blinker==1.8.2
+Brotli @ file:///croot/brotli-split_1714483155106/work
+cachetools==5.5.2
+certifi @ file:///croot/certifi_1725551672989/work/certifi
+cffi==1.17.1
+charset-normalizer @ file:///croot/charset-normalizer_1721748349566/work
+chumpy==0.70
+click==8.1.8
+colorama==0.4.6
+coloredlogs==15.0.1
+comm @ file:///croot/comm_1709322850197/work
+ConfigArgParse==1.7
+contourpy==1.1.1
+crcmod==1.7
+cryptography==44.0.1
+cycler==0.12.1
+Cython==3.1.0a1
+dash==2.18.2
+dash-core-components==2.0.0
+dash-html-components==2.0.0
+dash-table==5.0.0
+debugpy @ file:///croot/debugpy_1690905042057/work
+decorator @ file:///opt/conda/conda-bld/decorator_1643638310831/work
+defusedxml==0.7.1
+-e git+https://github.com/hkchengrex/Tracking-Anything-with-DEVA.git@b4387fe31519305fc35d209d022c82a687c6b4bd#egg=deva
+diff-gaussian-rasterization-contrastive-f @ file:///media/yangtongyu/T9/code2/sa4d-time_variant_ie/submodules/diff-gaussian-rasterization_contrastive_f
+diff_gaussian_rasterization @ file:///media/yangtongyu/T9/code2/sa4d-time_variant_ie/submodules/diff-gaussian-rasterization
+diffusers==0.32.2
+docker-pycreds==0.4.0
+eval_type_backport==0.2.2
+exceptiongroup==1.2.2
+executing==2.0.1
+fairscale==0.4.4
+fastapi==0.115.8
+fastjsonschema==2.21.1
+ffmpy==0.5.0
+filelock @ file:///croot/filelock_1700591183607/work
+Flask==3.0.3
+flatbuffers==25.2.10
+fonttools==4.55.4
+fqdn==1.5.1
+frozenlist==1.5.0
+fsspec==2024.12.0
+fvcore==0.1.5.post20221221
+gdown==5.2.0
+gitdb==4.0.12
+GitPython==3.1.44
+gmpy2 @ file:///tmp/build/80754af9/gmpy2_1645455532332/work
+google-auth==2.38.0
+google-auth-oauthlib==1.0.0
+gradio==4.44.1
+gradio_client==1.3.0
+-e git+https://github.com/hkchengrex/Grounded-Segment-Anything.git@c9b2404c350df91f6e986d278020196a56fbd84a#egg=groundingdino&subdirectory=GroundingDINO
+grpcio==1.70.0
+gsplat @ file:///media/yangtongyu/T9/code2/sa4d-time_variant_ie/submodules/gsplat
+gurobipy==11.0.3
+h11==0.14.0
+h5py==3.11.0
+hickle==5.0.3
+httpcore==1.0.7
+httpx==0.28.1
+huggingface-hub==0.29.1
+humanfriendly==10.0
+icecream==2.1.3
+idna==3.10
+imageio==2.35.1
+imageio-ffmpeg==0.5.1
+importlib-metadata @ file:///croot/importlib_metadata-suite_1704813515092/work
+importlib_resources==6.4.5
+iopath==0.1.10
+ipykernel @ file:///croot/ipykernel_1728665589812/work
+ipython @ file:///croot/ipython_1691532092695/work
+ipywidgets==8.1.5
+isoduration==20.11.0
+itsdangerous==2.2.0
+jaxtyping==0.2.19
+jedi @ file:///croot/jedi_1721058342488/work
+Jinja2 @ file:///croot/jinja2_1716993405101/work
+jmespath==0.10.0
+joblib==1.4.2
+json-tricks==3.17.3
+json5==0.10.0
+jsonpointer==3.0.0
+jsonschema==4.23.0
+jsonschema-specifications==2023.12.1
+jupyter-events==0.10.0
+jupyter-lsp==2.2.5
+jupyter_client @ file:///croot/jupyter_client_1699455897726/work
+jupyter_core @ file:///croot/jupyter_core_1718818295206/work
+jupyter_server==2.14.2
+jupyter_server_terminals==0.5.3
+jupyterlab==4.3.5
+jupyterlab_pygments==0.3.0
+jupyterlab_server==2.27.3
+jupyterlab_widgets==3.0.13
+kiwisolver==1.4.7
+-e git+https://github.com/princeton-vl/lietorch.git@0fa9ce8ffca86d985eca9e189a99690d6f3d4df6#egg=lietorch
+lpips==0.1.4
+Markdown==3.7
+markdown-it-py==3.0.0
+MarkupSafe @ file:///croot/markupsafe_1704205993651/work
+matplotlib==3.7.5
+matplotlib-inline @ file:///opt/conda/conda-bld/matplotlib-inline_1662014470464/work
+mdurl==0.1.2
+mistune==3.1.2
+mkl-fft @ file:///croot/mkl_fft_1695058164594/work
+mkl-random @ file:///croot/mkl_random_1695059800811/work
+mkl-service==2.4.0
+mmcv==1.6.0
+mmpose==0.28.0
+model-index==0.1.11
+mpmath @ file:///croot/mpmath_1690848262763/work
+multidict==6.1.0
+munkres==1.1.4
+nbclient==0.10.1
+nbconvert==7.16.6
+nbformat==5.10.4
+nest-asyncio @ file:///croot/nest-asyncio_1708532673751/work
+networkx @ file:///croot/networkx_1690561992265/work
+ninja==1.11.1.4
+notebook==7.3.2
+notebook_shim==0.2.4
+numpy @ file:///work/mkl/numpy_and_numpy_base_1682953417311/work
+oauthlib==3.2.2
+omegaconf==2.3.0
+onnx==1.17.0
+onnxruntime==1.19.2
+open3d==0.18.0
+opencv-python==4.11.0.86
+opendatalab==0.0.10
+openmim==0.3.9
+openxlab==0.1.2
+ordered-set==4.1.0
+orjson==3.10.15
+oss2==2.17.0
+overrides==7.7.0
+packaging @ file:///croot/packaging_1720101850331/work
+pandas==2.0.3
+pandocfilters==1.5.1
+parso @ file:///opt/conda/conda-bld/parso_1641458642106/work
+pexpect @ file:///tmp/build/80754af9/pexpect_1605563209008/work
+pickleshare @ file:///tmp/build/80754af9/pickleshare_1606932040724/work
+pillow @ file:///croot/pillow_1721059439630/work
+pkgutil_resolve_name==1.3.10
+platformdirs @ file:///croot/platformdirs_1692205439124/work
+plotly==5.24.1
+plyfile==0.8.1
+portalocker==3.0.0
+prometheus_client==0.21.1
+prompt-toolkit @ file:///croot/prompt-toolkit_1704404351921/work
+propcache==0.2.0
+protobuf==5.29.3
+psutil @ file:///opt/conda/conda-bld/psutil_1656431268089/work
+ptyprocess @ file:///tmp/build/80754af9/ptyprocess_1609355006118/work/dist/ptyprocess-0.7.0-py2.py3-none-any.whl
+PuLP==3.0.2
+pure-eval @ file:///opt/conda/conda-bld/pure_eval_1646925070566/work
+pyasn1==0.6.1
+pyasn1_modules==0.4.1
+pycocoevalcap==1.2
+pycocotools==2.0.7
+pycparser==2.22
+pycryptodome==3.21.0
+pydantic==2.10.6
+pydantic_core==2.27.2
+pydub==0.25.1
+Pygments @ file:///croot/pygments_1684279966437/work
+PyMCubes==0.1.2
+pyparsing==3.1.4
+pyquaternion==0.9.9
+PySocks @ file:///tmp/build/80754af9/pysocks_1605305779399/work
+python-dateutil @ file:///croot/python-dateutil_1716495738603/work
+python-json-logger==3.2.1
+python-multipart==0.0.20
+pytorch-msssim==1.0.0
+-e git+https://github.com/facebookresearch/pytorch3d.git@7a3c0cbc9d7b0e70ef39b7f3c35e9ce2b7376f32#egg=pytorch3d
+pytz==2023.4
+PyYAML @ file:///croot/pyyaml_1728657952215/work
+pyzmq @ file:///croot/pyzmq_1705605076900/work
+referencing==0.35.1
+regex==2024.11.6
+requests==2.32.3
+requests-oauthlib==2.0.0
+retrying==1.3.4
+rfc3339-validator==0.1.4
+rfc3986-validator==0.1.1
+rich==13.4.2
+rpds-py==0.20.1
+rsa==4.9
+ruff==0.9.7
+sacremoses==0.1.1
+safetensors==0.5.2
+scikit-learn==1.3.2
+scipy==1.10.0
+-e git+ssh://git@github.com/facebookresearch/segment-anything.git@dca509fe793f601edb92606367a655c15ac00fdf#egg=segment_anything
+semantic-version==2.10.0
+Send2Trash==1.8.3
+sentry-sdk==2.22.0
+setproctitle==1.3.5
+shellingham==1.5.4
+simple_knn @ file:///media/yangtongyu/T9/code2/sa4d-time_variant_ie/submodules/simple-knn
+six @ file:///tmp/build/80754af9/six_1644875935023/work
+smmap==5.0.2
+sniffio==1.3.1
+soupsieve==2.6
+stack-data @ file:///opt/conda/conda-bld/stack_data_1646927590127/work
+starlette==0.44.0
+supervision==0.25.1
+sympy @ file:///croot/sympy_1734622612703/work
+tabulate==0.9.0
+tenacity==9.0.0
+tensorboard==2.14.0
+tensorboard-data-server==0.7.2
+termcolor==2.4.0
+terminado==0.18.1
+thinplate @ git+https://github.com/cheind/py-thin-plate-spline@f6995795397118b7d0ac01aecd3f39ffbfad9dee
+threadpoolctl==3.5.0
+timm==0.4.12
+tinycss2==1.2.1
+tokenizers==0.10.3
+tomli==2.2.1
+tomlkit==0.12.0
+torch==2.1.0
+torch-geometric==2.6.1
+torch_cluster==1.6.3
+torch_scatter==2.1.2
+torch_sparse==0.6.18
+torch_spline_conv==1.2.2
+torchaudio==2.1.0
+torchvision==0.16.0
+tornado @ file:///croot/tornado_1718740109488/work
+tqdm==4.65.2
+traitlets @ file:///croot/traitlets_1718227057033/work
+transformers==4.15.0
+triton==2.1.0
+typeguard==4.4.0
+typer==0.15.1
+types-python-dateutil==2.9.0.20241206
+typing_extensions @ file:///croot/typing_extensions_1715268824938/work
+tzdata==2025.1
+uri-template==1.3.0
+urllib3==1.26.20
+uvicorn==0.33.0
+wandb==0.19.7
+wcwidth==0.2.13
+webcolors==24.8.0
+webencodings==0.5.1
+websocket-client==1.8.0
+websockets==12.0
+Werkzeug==3.0.6
+widgetsnbextension==4.0.13
+xtcocotools==1.14.3
+yacs==0.1.8
+yapf==0.43.0
+yarl==1.15.2
+zipp @ file:///croot/zipp_1729012354496/work
