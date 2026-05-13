@@ -52,11 +52,11 @@ python render_separate.py --model_path 'output_path'
 ```
 
 # Usage of other file
-Scene editing: composite.py
+**Scene editing**: composite.py
 
-Render binary mask: render_binary.py
+**Render binary mask**: render_binary.py
 
-Select and track GS at each frame: render_dynamic_mask.py
+**Select and track GS at each frame**: render_dynamic_mask.py
 
 
 
