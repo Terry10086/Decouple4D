@@ -550,9 +550,9 @@ def training_seperation(tb_writer, dataset, hyper, opt, pipe, expname, testing_i
             
             # 很关键 # 静态先验
             # chiken 2 3.5 3.5  其余 1 2 2 
-            motion_threshold = dy_threshold(iteration, factor=1, the = gs_iter) # chicken 2   torchocolate split-cookie 1   a... 1
-            scale_threshold = dy_threshold(iteration, factor=1, beta=1.0, the = gs_iter)  # a... 0.5   其余 3
-            rotate_threshold = dy_threshold(iteration, factor=2, beta=1.0, the = gs_iter)  # a... 2/不需要  
+            motion_threshold = dy_threshold(iteration, factor=1, the = gs_iter) 
+            scale_threshold = dy_threshold(iteration, factor=1, beta=1.0, the = gs_iter) 
+            rotate_threshold = dy_threshold(iteration, factor=2, beta=1.0, the = gs_iter)  
             
             dr_normalized = render_pkg_prob['dr'] / render_pkg_prob['dr'].norm(dim=1, keepdim=True).clamp(min=1e-8)
             theta = 2 * torch.acos(dr_normalized[:, 0].clamp(-1.0, 1.0))
@@ -562,7 +562,7 @@ def training_seperation(tb_writer, dataset, hyper, opt, pipe, expname, testing_i
             prior_mask_scale = (render_pkg_prob['ds'].norm(dim=-1, keepdim=True) > scale_threshold*render_pkg_prob['ds'].norm(dim=-1, keepdim=True).mean()).float()  
             prior_mask_rotate = (theta_deg.unsqueeze(-1) > rotate_threshold*theta_deg.mean()).float()
             
-            prior_mask = (prior_mask_motion+ prior_mask_scale).clamp(max=1.0)# prior_mask_scale prior_mask_rotate
+            prior_mask = (prior_mask_motion+ prior_mask_scale+prior_mask_rotate).clamp(max=1.0)# prior_mask_scale 
             prior_loss = cls_criterion(category, prior_mask).mean()    # F.binary_cross_entropy
 
             # pkg = render_seperate2(viewpoint_cam, gaussians, pipe, bg_color = background, cam_type=scene.dataset_type)
