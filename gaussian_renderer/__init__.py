@@ -924,9 +924,9 @@ def render_seperate(viewpoint_camera, pc : GaussianModel, pipe, bg_color : torch
     rotations_dy = dr_dy + rotations_dy     # category[idx_dynamic].detach() * 
 
     # 静态也在动
-    means3D_st = dx_st + means3D_st
-    scales_st = ds_st + scales_st
-    rotations_st = dr_st + rotations_st
+    # means3D_st = dx_st + means3D_st
+    # scales_st = ds_st + scales_st
+    # rotations_st = dr_st + rotations_st
 
     means3D_new[idx_static] = means3D_st
     means3D_new[idx_dynamic] = means3D_dy
