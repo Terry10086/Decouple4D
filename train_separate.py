@@ -369,18 +369,16 @@ def training_initialization(dataset, hyper, opt, pipe, testing_iterations, check
 
     return timer, gaussians, scene, tb_writer
 
-def training_seperation(tb_writer, dataset, hyper, opt, pipe, expname, testing_iterations=None, checkpoint_iterations=None, checkpoint=None, debug_from=None, cam_view=None, timer = None, num_classes = None,  gaussians = None, scene = None, use_BCE=False, use_dino = False):
+def training_seperation(tb_writer, dataset, hyper, opt, pipe, expname, testing_iterations=None, checkpoint_iterations=None, checkpoint=None, debug_from=None, cam_view=None, timer = None, num_classes = None,  gaussians = None, scene = None, use_BCE=False, use_dino = False, motion_factor=1.0, scale_factor=2.0, rotate_factor=2.0):
     # initialize scene (optimizer, but same GS)
     stage = 'fine'
     video_cams = scene.getVideoCameras()
     test_cams = scene.getTestCameras()
     train_cams = scene.getTrainCameras()
 
-    viewpoint_stack = None
-    if not viewpoint_stack and not opt.dataloader:
-        # dnerf's branch
-        viewpoint_stack = [i for i in train_cams]
-        temp_list = copy.deepcopy(viewpoint_stack)
+    # Separation stage always samples from in-memory camera list.
+    viewpoint_stack = [i for i in train_cams]
+    temp_list = copy.deepcopy(viewpoint_stack)
 
     classifier = Classifier(hyper, dataset.feature_dim, num_classes, use_BCE)
     gru = TrajectoryGRU()
@@ -398,11 +396,23 @@ def training_seperation(tb_writer, dataset, hyper, opt, pipe, expname, testing_i
         
         print(Fore.MAGENTA + "Load ckpt:" + Style.RESET_ALL, Fore.MAGENTA + load_path + Style.RESET_ALL)
 
-        # 4dgs
-        gs_path = os.path.join(load_path,"gaussians.pth")
+        # 4dgs: prefer gaussians.pth; fallback to train_4dgs checkpoint.
+        gs_path = os.path.join(load_path, "gaussians.pth")
         if os.path.exists(gs_path):
             gaussians_params = torch.load(gs_path)
             gaussians.restore(gaussians_params, opt, stage)  # , stage='semantic'
+        else:
+            fine_ckpt_path = os.path.join(scene.model_path, f"chkpnt_fine_{loaded_iter}.pth")
+            if os.path.exists(fine_ckpt_path):
+                print(Fore.MAGENTA + "Fallback ckpt:" + Style.RESET_ALL, Fore.MAGENTA + fine_ckpt_path + Style.RESET_ALL)
+                model_params, ckpt_iter = torch.load(fine_ckpt_path)
+                gaussians.restore(model_params, opt, stage)
+                first_iter = ckpt_iter
+            else:
+                print(
+                    Fore.YELLOW + "Warning:" + Style.RESET_ALL,
+                    f"Neither gaussians.pth nor chkpnt_fine_{loaded_iter}.pth was found."
+                )
 
         # # e-d3dgs
         # gaussians.load_ply(os.path.join(load_path, "point_cloud.ply"))
@@ -418,7 +428,8 @@ def training_seperation(tb_writer, dataset, hyper, opt, pipe, expname, testing_i
             gru_params = torch.load(gru_path)
             gru.restore(gru_params)
 
-        first_iter = loaded_iter
+        if first_iter == 0:
+            first_iter = loaded_iter
 
 
     bg_color = [1, 1, 1] if dataset.white_background else [0, 0, 0]     # [1,1,1]
@@ -550,9 +561,9 @@ def training_seperation(tb_writer, dataset, hyper, opt, pipe, expname, testing_i
             
             # 很关键 # 静态先验
             # chiken 2 3.5 3.5  其余 1 2 2 
-            motion_threshold = dy_threshold(iteration, factor=1, the = gs_iter) 
-            scale_threshold = dy_threshold(iteration, factor=1, beta=1.0, the = gs_iter) 
-            rotate_threshold = dy_threshold(iteration, factor=2, beta=1.0, the = gs_iter)  
+            motion_threshold = dy_threshold(iteration, factor=motion_factor, the = gs_iter) # chicken 2   torchocolate split-cookie 1   a... 1
+            scale_threshold = dy_threshold(iteration, factor=scale_factor, beta=1.0, the = gs_iter)  # a... 0.5   其余 3
+            rotate_threshold = dy_threshold(iteration, factor=rotate_factor, beta=1.0, the = gs_iter)  # a... 2/不需要  
             
             dr_normalized = render_pkg_prob['dr'] / render_pkg_prob['dr'].norm(dim=1, keepdim=True).clamp(min=1e-8)
             theta = 2 * torch.acos(dr_normalized[:, 0].clamp(-1.0, 1.0))
@@ -562,7 +573,7 @@ def training_seperation(tb_writer, dataset, hyper, opt, pipe, expname, testing_i
             prior_mask_scale = (render_pkg_prob['ds'].norm(dim=-1, keepdim=True) > scale_threshold*render_pkg_prob['ds'].norm(dim=-1, keepdim=True).mean()).float()  
             prior_mask_rotate = (theta_deg.unsqueeze(-1) > rotate_threshold*theta_deg.mean()).float()
             
-            prior_mask = (prior_mask_motion+ prior_mask_scale+prior_mask_rotate).clamp(max=1.0)# prior_mask_scale 
+            prior_mask = (prior_mask_motion+prior_mask_scale + prior_mask_rotate).clamp(max=1.0)#  
             prior_loss = cls_criterion(category, prior_mask).mean()    # F.binary_cross_entropy
 
             # pkg = render_seperate2(viewpoint_cam, gaussians, pipe, bg_color = background, cam_type=scene.dataset_type)
@@ -585,7 +596,7 @@ def training_seperation(tb_writer, dataset, hyper, opt, pipe, expname, testing_i
             if iteration%100==0: # iteration%100==0:
                 pkg = render_seperate2(viewpoint_cam, gaussians, pipe, bg_color = background, cam_type=scene.dataset_type)    # 只渲染motion大于avg的GS
                 torchvision.utils.save_image(
-                    torch.cat([gt_image,  pkg['rendered_st'], pkg['rendered_dy'], pkg['rendered_motion'],pkg['rendered_scale'],pkg['rendered_theta_deg']], dim=2), # pkg['render'],
+                    torch.cat([gt_image,  pkg['render'], pkg['rendered_st'], pkg['rendered_dy'], pkg['rendered_motion'],pkg['rendered_scale'],pkg['rendered_theta_deg']], dim=2), # pkg['render'],
                             rf'./output/hypernerf/broom/sep1/com_{iteration:06d}-rotate.png'
                 )
 
@@ -900,22 +911,42 @@ if __name__ == "__main__":
     parser.add_argument("--coarse_save_iterations", nargs="+", type=int, default=[3000])    # only coarse
     parser.add_argument("--quiet", action="store_true")
     parser.add_argument("--checkpoint_iterations", nargs="+", type=int, default=[2000, 5000, 7000, 10000, 12000, 14000, 17000, 19000, 23000, 25000])  # 保存全部.pth
-    parser.add_argument("--start_checkpoint", type=str, default = f'./output/hypernerf/{scene_name}/chkpnt_coarse_3000.pth')   # ./output/hypernerf/{scene_name}/chkpnt_coarse_3000.pth
+    parser.add_argument("--start_checkpoint", type=str, default = f'./output/hypernerf/{scene_name}/chkpnt_fine_14000.pth')   # ./output/hypernerf/{scene_name}/chkpnt_coarse_3000.pth
     parser.add_argument("--is_continue", type=bool, default = True)   # 是否导入.pth
-    parser.add_argument("--expname", type=str, default = f"./hypernerf/{scene_name}-wo-rayloss")
-    parser.add_argument("--configs", type=str, default = "arguments/hypernerf/default.py")  # arguments/hypernerf/default.py arguments/dnerf/bouncingballs.py
+    parser.add_argument("--expname", type=str, default = f"./hypernerf/param-sensitive/{scene_name}")
+    parser.add_argument("--configs", type=str, default = f"arguments/hypernerf/default.py")  # arguments/hypernerf/default.py {scene_name}_chunk70_90
     parser.add_argument("--mode", type=str, default="scene")
     parser.add_argument("--cam_view", type=str, default='cam16')
     parser.add_argument("--num_classes", type=int, default=2)
+    parser.add_argument("--object_masks", default=False)
+    parser.add_argument("--motion_factor", type=float, default=1.0)
+    parser.add_argument("--scale_factor", type=float, default=2.0)
+    parser.add_argument("--rotate_factor", type=float, default=2.0)
     
     args = parser.parse_args(sys.argv[1:])
     # args.save_iterations.append(args.iterations)
+
+    cli_override_keys = [
+        "feature_iterations",
+        "motion_factor",
+        "scale_factor",
+        "rotate_factor",
+    ]
+    cli_overrides = {}
+    argv = sys.argv[1:]
+    for key in cli_override_keys:
+        flag = f"--{key}"
+        if flag in argv or any(arg.startswith(f"{flag}=") for arg in argv):
+            cli_overrides[key] = getattr(args, key)
 
     if args.configs:
         import mmcv
         from utils.params_utils import merge_hparams
         config = mmcv.Config.fromfile(args.configs)     # read configs
         args = merge_hparams(args, config)
+
+    for key, value in cli_overrides.items():
+        setattr(args, key, value)
     print("Optimizing " + args.model_path)
 
     # Initialize system state (RNG)
@@ -924,7 +955,7 @@ if __name__ == "__main__":
 
     # init GS:  
     timer, gaussians, scene, tb_writer = training_initialization(lp.extract(args), hp.extract(args), op.extract(args), pp.extract(args), args.test_iterations, args.coarse_save_iterations, args.start_checkpoint, args.debug_from, args.expname, 
-                                                                args.mode, object_masks=True)
+                                                                args.mode, object_masks=args.object_masks)
     backup_current_script(args.expname)
 
     with open(os.path.join(args.model_path, "feature_cfg_args"), 'w') as cfg_log_f:
@@ -943,6 +974,9 @@ if __name__ == "__main__":
         num_classes=args.num_classes,
         gaussians=gaussians,
         scene=scene,
+        motion_factor=args.motion_factor,
+        scale_factor=args.scale_factor,
+        rotate_factor=args.rotate_factor,
     )
     
     
