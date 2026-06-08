@@ -1,5 +1,5 @@
 
-<!--
+
 # Decouple4D: Static-Dynamic 3D Gaussian Decoupling from Monocular Video via Spatial-Temporal Consistency
 The code for "Decouple4D: Static-Dynamic 3D Gaussian Decoupling from Monocular Video via Spatial-Temporal Consistency".
 
@@ -59,7 +59,7 @@ python render_separate.py --model_path 'output_path'
 **Render binary mask**: render_binary.py
 
 **Select and track GS at each frame**: render_dynamic_mask.py
--->
+
 
 
 
