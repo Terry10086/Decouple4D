@@ -58,7 +58,7 @@ python render_separate.py --model_path 'output_path'
 
 **Render binary mask**: render_binary.py
 
-**Select and track GS at each frame**: render_dynamic_mask.py
+**Select and track GS at each frame** (so that you can observe the servere overfitting of 4DGS): render_dynamic_mask.py 
 
 
 
