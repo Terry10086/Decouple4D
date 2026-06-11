@@ -4,7 +4,11 @@
 The code for "Decouple4D: Static-Dynamic 3D Gaussian Decoupling from Monocular Video via Spatial-Temporal Consistency".
 
 
-[chickchicken](https://github.com/user-attachments/assets/5f26b26e-2826-48a9-973d-46e42c60f3bb)
+
+
+https://github.com/user-attachments/assets/e9a52f2f-1276-4b7e-b468-17dae6a921d4
+
+
 
 
 
